@@ -51,10 +51,10 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
             // ignore: prefer_const_literals_to_create_immutables
             children: [
               const Text(
-                "Pexel",
+                "Wall",
                 style: TextStyle(fontSize: 20, color: Colors.black),
               ),
-              const Text("API",
+              const Text("Sheet",
                   style: TextStyle(fontSize: 20, color: Colors.white))
             ],
           ),
