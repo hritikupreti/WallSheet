@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:pexels_api/widget/widgets.dart';
 
 //to get a popup message dialuge whenever user do some function
 void showAddToFavMeaasge() {
@@ -26,7 +27,7 @@ void showRemoveFromFavMessage() {
 
 void warningMessage() {
   Fluttertoast.showToast(
-      msg: "Can't remove from here goto favourite screen",
+      msg: "Can't remove from here goto favourite",
       toastLength: Toast.LENGTH_SHORT,
       gravity: ToastGravity.BOTTOM,
       timeInSecForIosWeb: 1,

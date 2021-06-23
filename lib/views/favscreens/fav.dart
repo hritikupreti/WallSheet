@@ -1,5 +1,6 @@
 import 'package:bubble_tab_indicator/bubble_tab_indicator.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:pexels_api/views/favscreens/favvideos.dart';
 import 'package:pexels_api/views/favscreens/favimages.dart';
 
@@ -35,12 +36,18 @@ class _FavScreenState extends State<FavScreen>
           mainAxisAlignment: MainAxisAlignment.center,
           // ignore: prefer_const_literals_to_create_immutables
           children: [
-            const Text(
-              "Favo",
-              style: TextStyle(fontSize: 20, color: Colors.black),
+            Text(
+              "Favou",
+              style: GoogleFonts.mateSc(
+                  fontSize: 30,
+                  color: Colors.white,
+                  fontWeight: FontWeight.w700),
             ),
-            const Text("urites",
-                style: TextStyle(fontSize: 20, color: Colors.white))
+            Text("rites",
+                style: GoogleFonts.mateSc(
+                    fontSize: 30,
+                    color: Colors.amber,
+                    fontWeight: FontWeight.w700))
           ],
         ),
         bottom: TabBar(

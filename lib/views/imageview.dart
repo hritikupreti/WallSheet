@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:pexels_api/helper/database.dart';
-import 'package:pexels_api/views/photos.dart';
 import 'package:pexels_api/widget/tostmessage.dart';
 import 'package:pexels_api/widget/widgets.dart';
 
@@ -23,6 +22,58 @@ class ImageView extends StatefulWidget {
 
 class _ImageViewState extends State<ImageView> {
   bool isfav = false;
+  void setDialog(BuildContext context) {
+    var alertDialog = AlertDialog(
+      backgroundColor: Colors.white.withOpacity(0.8),
+      elevation: 0,
+      title: const Text("Set mage as", style: TextStyle(color: Colors.black)),
+      actions: [
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            // ignore: deprecated_member_use
+            FlatButton(
+              onPressed: () {
+                setASHomeScreen(widget.url);
+                Navigator.pop(context);
+              },
+              child: const Text("Home screen",
+                  style: TextStyle(color: Colors.black)),
+            ),
+            const Divider(
+              thickness: 1,
+            ),
+            // ignore: deprecated_member_use
+            FlatButton(
+                onPressed: () {
+                  setASLockScreen(widget.url);
+                  Navigator.pop(context);
+                },
+                child: const Text("Lock screen",
+                    style: TextStyle(color: Colors.black))),
+            const Divider(
+              thickness: 1,
+            ),
+
+            // ignore: deprecated_member_use
+            FlatButton(
+                onPressed: () {
+                  setASBothScreen(widget.url);
+                  Navigator.pop(context);
+                },
+                child:
+                    const Text("Both", style: TextStyle(color: Colors.black))),
+          ],
+        )
+      ],
+    );
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return alertDialog;
+        });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,30 +90,30 @@ class _ImageViewState extends State<ImageView> {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 70, vertical: 30),
               child: Container(
-                height: 45,
-                width: 220,
+                height: 55,
+                width: 250,
                 decoration: BoxDecoration(
                   color: Colors.black.withOpacity(0.6),
                   borderRadius: BorderRadius.circular(15),
                 ),
-                child: Center(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 15, vertical: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      // ignore: prefer_const_literals_to_create_immutables
-                      children: [
-                        const Text("by ~",
-                            style: TextStyle(
-                                fontSize: 12,
-                                color: Colors.white,
-                                fontWeight: FontWeight.w300)),
-                        Text(widget.photographerName!,
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    // ignore: prefer_const_literals_to_create_immutables
+                    children: [
+                      const Text("by ~",
+                          style: TextStyle(
+                              fontSize: 12,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w300)),
+                      Center(
+                        child: Text(widget.photographerName!,
                             style: const TextStyle(
-                                fontSize: 22, color: Colors.white)),
-                      ],
-                    ),
+                                fontSize: 20, color: Colors.white)),
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -78,49 +129,76 @@ class _ImageViewState extends State<ImageView> {
                     Navigator.pop(context);
                     showRemoveFromFavMessage();
                   } else {
-                    Map<String, String> imageDetailMap = {
+                    Map<String, dynamic> imageDetailMap = {
                       "Imageurl": widget.url,
                       "autherName": widget.photographerName!,
+                      "time": DateTime.now().microsecondsSinceEpoch
                     };
                     addImageToFav(imageDetailMap);
+                    if (isfav) {
+                      warningMessage();
+                    } else {
+                      showAddToFavMeaasge();
+                    }
                     setState(() {
                       isfav = true;
                     });
-                    if (isfav) {
-                      warningMessage();
-                    }
                   }
                 },
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 45, horizontal: 25),
-                  child: Container(
-                    height: 40,
-                    width: 40,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(40),
-                    ),
-                    child: widget.fromFav
-                        ? const Icon(
-                            Icons.favorite_outlined,
-                            size: 27,
-                            color: Colors.red,
-                          )
-                        : isfav
+                child: Column(
+                  children: [
+                    Padding(
+                      padding:
+                          const EdgeInsets.only(right: 25, top: 45, bottom: 15),
+                      child: Container(
+                        height: 40,
+                        width: 40,
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(40),
+                        ),
+                        child: widget.fromFav
                             ? const Icon(
                                 Icons.favorite_outlined,
                                 size: 27,
                                 color: Colors.red,
                               )
-                            : const Icon(
-                                Icons.favorite_border_sharp,
-                                size: 27,
-                                color: Colors.red,
-                              ),
-                  ),
+                            : isfav
+                                ? const Icon(
+                                    Icons.favorite_outlined,
+                                    size: 27,
+                                    color: Colors.red,
+                                  )
+                                : const Icon(
+                                    Icons.favorite_border_sharp,
+                                    size: 27,
+                                    color: Colors.red,
+                                  ),
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        setDialog(context);
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            right: 25, top: 15, bottom: 15),
+                        child: Container(
+                            height: 40,
+                            width: 40,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(40),
+                            ),
+                            child: const Icon(
+                              Icons.downloading_outlined,
+                              size: 27,
+                            )),
+                      ),
+                    )
+                  ],
                 ),
-              ))
+              )),
         ],
       ),
     ));

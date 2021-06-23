@@ -1,10 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:bubble_tab_indicator/bubble_tab_indicator.dart';
+import 'package:flutter/painting.dart';
 import 'package:pexels_api/helper/auth.dart';
 import 'package:pexels_api/views/favscreens/fav.dart';
 import 'package:pexels_api/views/photos.dart';
 import 'package:pexels_api/views/videos.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 // ignore: use_key_in_widget_constructors
 class Home extends StatefulWidget {
@@ -50,12 +52,16 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
             mainAxisAlignment: MainAxisAlignment.center,
             // ignore: prefer_const_literals_to_create_immutables
             children: [
-              const Text(
-                "Wall",
-                style: TextStyle(fontSize: 20, color: Colors.black),
-              ),
-              const Text("Sheet",
-                  style: TextStyle(fontSize: 20, color: Colors.white))
+              Text("Wall",
+                  style: GoogleFonts.josefinSans(
+                      fontSize: 30,
+                      color: Colors.black,
+                      fontWeight: FontWeight.w700)),
+              Text("Sheet",
+                  style: GoogleFonts.josefinSans(
+                      fontSize: 30,
+                      color: Colors.white,
+                      fontWeight: FontWeight.w700))
             ],
           ),
           bottom: TabBar(

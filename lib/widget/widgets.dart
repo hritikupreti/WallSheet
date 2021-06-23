@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:flutter_wallpaper_manager/flutter_wallpaper_manager.dart';
 import 'package:pexels_api/helper/chewie.dart';
 import 'package:pexels_api/helper/database.dart';
 import 'package:pexels_api/views/imageview.dart';
@@ -154,4 +156,25 @@ Widget noInternet(context) {
       ],
     ),
   );
+}
+
+Future<void> setASHomeScreen(String url) async {
+  int location = WallpaperManager.HOME_SCREEN;
+  var file = await DefaultCacheManager().getSingleFile(url);
+  bool result =
+      await WallpaperManager.setWallpaperFromFile(file.path, location);
+}
+
+Future<void> setASLockScreen(String url) async {
+  int location = WallpaperManager.LOCK_SCREEN;
+  var file = await DefaultCacheManager().getSingleFile(url);
+  bool result =
+      await WallpaperManager.setWallpaperFromFile(file.path, location);
+}
+
+Future<void> setASBothScreen(String url) async {
+  int location = WallpaperManager.BOTH_SCREEN;
+  var file = await DefaultCacheManager().getSingleFile(url);
+  bool result =
+      await WallpaperManager.setWallpaperFromFile(file.path, location);
 }
